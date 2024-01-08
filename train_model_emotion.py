@@ -28,9 +28,9 @@ validation_generator = validation_data_gen.flow_from_directory(
 # create model structure
 emotion_model = Sequential()
 
-# First block: 2 x Convolution layer with 32 filters + Max pooling
-emotion_model.add(Conv2D(32, (3, 3), padding='same', activation='relu', input_shape=(48, 48, 1)))
-emotion_model.add(Conv2D(32, (3, 3), activation='relu'))
+# First block: 2 x Convolution layer with 128 filters + Max pooling
+emotion_model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+emotion_model.add(Conv2D(128, (3, 3), activation='relu'))
 emotion_model.add(MaxPooling2D(pool_size=(2, 2)))
 emotion_model.add(Dropout(0.25))
 
@@ -40,16 +40,16 @@ emotion_model.add(Conv2D(64, (3, 3), activation='relu'))
 emotion_model.add(MaxPooling2D(pool_size=(2, 2)))
 emotion_model.add(Dropout(0.25))
 
-# Third block: 3 x Convolution layer with 128 filters + Max pooling
-emotion_model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
-emotion_model.add(Conv2D(128, (3, 3), activation='relu'))
-emotion_model.add(Conv2D(128, (3, 3), activation='relu'))
+# Third block: 2 x Convolution layer with 32 filters + Max pooling
+emotion_model.add(Conv2D(32, (3, 3), padding='same', activation='relu', input_shape=(48, 48, 1)))
+emotion_model.add(Conv2D(32, (3, 3), activation='relu'))
+emotion_model.add(Conv2D(32, (3, 3), activation='relu'))
 emotion_model.add(MaxPooling2D(pool_size=(2, 2)))
 emotion_model.add(Dropout(0.25))
 
 # Flattening followed by Dense layers
 emotion_model.add(Flatten())
-emotion_model.add(Dense(512, activation='relu'))
+emotion_model.add(Dense(256, activation='relu'))
 emotion_model.add(Dropout(0.5))
 emotion_model.add(Dense(5, activation='softmax')) 
 
@@ -66,5 +66,5 @@ emotion_model_info = emotion_model.fit(
     validation_steps=6043 // 64)
 
 
-emotion_model.save('emotion-recognition.h5')
+emotion_model.save('emotion_model.h5')
 
